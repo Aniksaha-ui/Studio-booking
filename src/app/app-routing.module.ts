@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AutocompleteComponent } from './component/autocomplete/autocomplete.component';
+import { AutocompleteComponent } from './component/reuse-component/autocomplete/autocomplete.component';
 import { InputComponent } from './input/input.component';
 import { HomeComponent } from './component/home/home.component';
-import { CardComponent } from './component/card/card.component';
-import { SliderComponent } from './component/slider/slider.component';
-import { TableComponent } from './component/table/table.component';
-import { FormdesignComponent } from './component/formdesign/formdesign.component';
-import { AssociateComponent } from './component/associate/associate.component';
+import { CardComponent } from './component/reuse-component/card/card.component';
+import { SliderComponent } from './component/reuse-component/slider/slider.component';
+import { TableComponent } from './component/reuse-component/table/table.component';
+import { FormdesignComponent } from './component/reuse-component/formdesign/formdesign.component';
+import { AssociateComponent } from './component/reuse-component/associate/associate.component';
 import { StudioListComponent } from './component/studio-list/studio-list.component';
 
 const routes: Routes = [

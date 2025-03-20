@@ -6,18 +6,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputComponent } from './input/input.component';
 import { MaterialModule } from './material-module';
-import { AutocompleteComponent } from './component/autocomplete/autocomplete.component';
+import { AutocompleteComponent } from './component/reuse-component/autocomplete/autocomplete.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { HomeComponent } from './component/home/home.component';
-import { CardComponent } from './component/card/card.component';
-import { SliderComponent } from './component/slider/slider.component';
-import { TableComponent } from './component/table/table.component';
+import { CardComponent } from './component/reuse-component/card/card.component';
+import { SliderComponent } from './component/reuse-component/slider/slider.component';
+import { TableComponent } from './component/reuse-component/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormdesignComponent } from './component/formdesign/formdesign.component';
-import { PopupComponent } from './component/popup/popup.component';
-import { AssociateComponent } from './component/associate/associate.component';
-import { UserdetailComponent } from './component/userdetail/userdetail.component';
+import { FormdesignComponent } from './component/reuse-component/formdesign/formdesign.component';
+import { PopupComponent } from './component/reuse-component/popup/popup.component';
+import { AssociateComponent } from './component/reuse-component/associate/associate.component';
+import { UserdetailComponent } from './component/reuse-component/userdetail/userdetail.component';
 import { StudioListComponent } from './component/studio-list/studio-list.component';
 import { BookingPopupComponent } from './component/booking-popup/booking-popup.component';
 
@@ -36,7 +36,7 @@ import { BookingPopupComponent } from './component/booking-popup/booking-popup.c
     AssociateComponent,
     UserdetailComponent,
     StudioListComponent,
-    BookingPopupComponent
+    BookingPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,9 +45,9 @@ import { BookingPopupComponent } from './component/booking-popup/booking-popup.c
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
