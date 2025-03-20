@@ -1,0 +1,81 @@
+<mat-card>
+  <mat-card-header>
+    <!-- Autocomplete for Area -->
+    <mat-form-field appearance="fill">
+      <mat-label>Search by Area</mat-label>
+      <input
+        matInput
+        [matAutocomplete]="auto"
+        [formControl]="areaControl"
+        (keyup)="Filterchange($event)"
+        placeholder="Select Area"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let area of areaList" [value]="area.Area">
+          {{ area.Area }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button
+      style="margin-left: 60%"
+      (click)="addcustomer()"
+      mat-raised-button
+      color="primary"
+    >
+      Add User (+)
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Table Columns remain the same -->
+      <ng-container matColumnDef="name">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Studio Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.Type }}</td>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element.Location.City }}</td>
+      </ng-container>
+      <ng-container matColumnDef="area">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Area</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Location.Address }}<br /><br />
+          {{ element.Location.Area }}, {{ element.Location.City }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.PricePerHour }}</td>
+      </ng-container>
+      <ng-container matColumnDef="rating">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Rating</th>
+        <td mat-cell *matCellDef="let element">{{ element.Rating }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            (click)="bookingStudio(element)"
+            mat-raised-button
+            color="primary"
+          >
+            Booking
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+  <br />
+  <mat-card-footer>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-footer>
+</mat-card>

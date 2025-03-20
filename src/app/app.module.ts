@@ -3,37 +3,51 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
-import { StudioBookingComponent } from './features/studio-booking/studio-booking.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InputComponent } from './input/input.component';
+import { MaterialModule } from './material-module';
+import { AutocompleteComponent } from './component/autocomplete/autocomplete.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MenubarComponent } from './component/menubar/menubar.component';
+import { HomeComponent } from './component/home/home.component';
+import { CardComponent } from './component/card/card.component';
+import { SliderComponent } from './component/slider/slider.component';
+import { TableComponent } from './component/table/table.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormdesignComponent } from './component/formdesign/formdesign.component';
+import { PopupComponent } from './component/popup/popup.component';
+import { AssociateComponent } from './component/associate/associate.component';
+import { UserdetailComponent } from './component/userdetail/userdetail.component';
+import { StudioListComponent } from './component/studio-list/studio-list.component';
+import { BookingPopupComponent } from './component/booking-popup/booking-popup.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, StudioBookingComponent],
+  declarations: [
+    AppComponent,
+    InputComponent,
+    AutocompleteComponent,
+    MenubarComponent,
+    HomeComponent,
+    CardComponent,
+    SliderComponent,
+    TableComponent,
+    FormdesignComponent,
+    PopupComponent,
+    AssociateComponent,
+    UserdetailComponent,
+    StudioListComponent,
+    BookingPopupComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    FormsModule,
-    MatInputModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     ReactiveFormsModule,
-    MatPaginatorModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

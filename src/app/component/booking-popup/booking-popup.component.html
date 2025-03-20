@@ -1,0 +1,45 @@
+<form [formGroup]="myform" (ngSubmit)="StudioBooking()">
+  <h1 mat-dialog-title>Booking A Seat</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input formControlName="name" matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+    </mat-form-field>
+
+    <!-- Date Picker -->
+    <mat-form-field>
+      <mat-label>Select Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Time Dropdown -->
+    <mat-form-field>
+      <mat-label>Select Time</mat-label>
+      <mat-select formControlName="time">
+        <mat-option *ngFor="let time of timeSlots" [value]="time">
+          {{ time }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <mat-checkbox formControlName="status">Is Active</mat-checkbox>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button type="submit" color="primary">Save</button>
+    <a (click)="closeModal()" mat-raised-button color="warn">Close</a>
+  </div>
+</form>
