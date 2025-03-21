@@ -1,8 +1,17 @@
 /* Make the card responsive */
+
+.custom-header {
+  margin-top: 1%;
+  text-align: center;
+  color: rgb(63, 63, 209);
+}
+
 .responsive-card {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 /* Ensure the search field takes full width on small screens */

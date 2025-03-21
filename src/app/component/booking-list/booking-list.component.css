@@ -1,26 +1,30 @@
 /* Make the card responsive */
+
+.custom-header {
+  margin-top: 1%;
+  text-align: center !important;
+  color: rgb(63, 63, 209);
+}
+
 .responsive-card {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
-/* Responsive Table Wrapper */
 .table-responsive {
   overflow-x: auto;
 }
 
-/* Bordered Table Styling */
 .bordered-table {
   width: 100%;
   border-collapse: collapse;
   background: #fff;
 }
 
-/* Add border to table cells */
 .bordered-table th,
 .bordered-table td {
   border: 1px solid #ddd;
@@ -28,7 +32,6 @@
   text-align: left;
 }
 
-/* Header Styling */
 .bordered-table th {
   background-color: #007bff;
   color: white;
@@ -36,18 +39,15 @@
   font-weight: bold;
 }
 
-/* Alternate Row Colors */
 .bordered-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Hover Effect */
 .bordered-table tr:hover {
   background-color: #f1f1f1;
   transition: 0.3s;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 768px) {
   .bordered-table th,
   .bordered-table td {
@@ -55,7 +55,6 @@
     padding: 8px;
   }
 
-  /* Hide Email Column on Small Screens */
   .mat-column-email {
     display: none;
   }

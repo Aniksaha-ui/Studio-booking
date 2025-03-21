@@ -1,13 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { PopupComponent } from '../reuse-component/popup/popup.component';
-import { UserdetailComponent } from '../reuse-component/userdetail/userdetail.component';
-import { BookingPopupComponent } from '../booking-popup/booking-popup.component';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IStudio, IArea } from 'src/app/Model/Studio';
 import { MasterService } from 'src/app/service/master.service';
 import { BookingService } from 'src/app/service/booking-service.service';
 
