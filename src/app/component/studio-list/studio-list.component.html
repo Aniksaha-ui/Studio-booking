@@ -16,14 +16,6 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <button
-      style="margin-left: 60%"
-      (click)="addcustomer()"
-      mat-raised-button
-      color="primary"
-    >
-      Add User (+)
-    </button>
   </mat-card-header>
   <mat-card-content>
     <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -52,7 +44,7 @@
         <td mat-cell *matCellDef="let element">{{ element.PricePerHour }}</td>
       </ng-container>
       <ng-container matColumnDef="amenities">
-        <th mat-sort-header mat-header-cell *matHeaderCellDef>Price</th>
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Amenities</th>
         <td mat-cell *matCellDef="let element">
           <span *ngFor="let amenity of element.Amenities">{{ amenity }}, </span>
         </td>

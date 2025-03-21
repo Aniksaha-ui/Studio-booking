@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { map, Observable } from 'rxjs';
 import { BookingService } from 'src/app/service/booking-service.service';
 import { MasterService } from 'src/app/service/master.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-booking-popup',
@@ -13,7 +14,7 @@ import { MasterService } from 'src/app/service/master.service';
 })
 export class BookingPopupComponent implements OnInit {
   selectedStudioInformation: any;
-  myform: FormGroup;
+  bookingForm: FormGroup;
   timeSlots: string[] = [];
 
   constructor(
@@ -23,7 +24,7 @@ export class BookingPopupComponent implements OnInit {
     private service: MasterService,
     private bookingService: BookingService
   ) {
-    this.myform = this.fb.group({
+    this.bookingForm = this.fb.group({
       id: [''],
       name: [''],
       customer_name: [''],
@@ -45,7 +46,7 @@ export class BookingPopupComponent implements OnInit {
   }
 
   setModaldata() {
-    this.myform.patchValue({
+    this.bookingForm.patchValue({
       id: this.selectedStudioInformation?.Id || '',
       name: this.selectedStudioInformation?.Name || '',
       customer_name: '',
@@ -102,26 +103,65 @@ export class BookingPopupComponent implements OnInit {
   }
 
   StudioBooking() {
-    if (this.myform.valid) {
-      let validTimeSlot: number = this.validateTimeSlot(this.myform.value.time);
-      let checkAvailability = this.checkAvailability(this.myform.value);
+    if (this.bookingForm.valid) {
+      let validTimeSlot: number = this.validateTimeSlot(
+        this.bookingForm.value.time
+      );
+      let checkAvailability = this.checkAvailability(this.bookingForm.value);
 
       if (!validTimeSlot) {
-        alert('Time Slot not available');
+        Swal.fire({
+          icon: 'error',
+          title: 'Time Slot Not Available!',
+          text: 'The selected time slot is not available. Please choose another time.',
+        });
         return;
       }
 
       if (!checkAvailability) {
-        alert('Already booked this slot, try another slot.');
-        return;
+        Swal.fire({
+          icon: 'error',
+          title: 'Already Booked Slot!',
+          text: 'The selected time slot is not available. Please choose another time.',
+        });
       }
 
-      this.bookingService.bookingStudio(this.myform.value).subscribe((res) => {
-        if (res.status == 200) {
-          alert(res.message);
-          this.closeModal();
-        }
-      });
+      this.bookingService
+        .bookingStudio(this.bookingForm.value)
+        .subscribe((res) => {
+          if (res.status == 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Booking successfully',
+              text: 'Booking successfully',
+              html: `
+              <table style="width:100%; border-collapse: collapse; text-align: left;">
+                <tr>
+                  <th style="padding: 8px; border: 1px solid #ddd;">Field</th>
+                  <th style="padding: 8px; border: 1px solid #ddd;">Details</th>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd;">Customer Name</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${this.bookingForm.value.customer_name}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd;">Email</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${this.bookingForm.value.email}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd;">Date</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${this.bookingForm.value.date}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #ddd;">Time</td>
+                  <td style="padding: 8px; border: 1px solid #ddd;">${this.bookingForm.value.time}</td>
+                </tr>
+              </table>
+            `,
+            });
+            this.closeModal();
+          }
+        });
     }
   }
 }
