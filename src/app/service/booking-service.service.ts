@@ -30,6 +30,10 @@ export class BookingService {
   }
 
   fetchBookingStudioInformation(): Observable<any> {
-    return of({ status: 200, data: localStorage.getItem('bookingData') ?? [] });
+    const bookingData = localStorage.getItem('bookingData');
+    return of({
+      status: 200,
+      data: bookingData ? JSON.parse(bookingData) : [],
+    });
   }
 }

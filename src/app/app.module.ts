@@ -20,6 +20,7 @@ import { AssociateComponent } from './component/reuse-component/associate/associ
 import { UserdetailComponent } from './component/reuse-component/userdetail/userdetail.component';
 import { StudioListComponent } from './component/studio-list/studio-list.component';
 import { BookingPopupComponent } from './component/booking-popup/booking-popup.component';
+import { BookingListComponent } from './component/booking-list/booking-list.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { BookingPopupComponent } from './component/booking-popup/booking-popup.c
     UserdetailComponent,
     StudioListComponent,
     BookingPopupComponent,
+    BookingListComponent,
   ],
   imports: [
     BrowserModule,

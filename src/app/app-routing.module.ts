@@ -9,9 +9,11 @@ import { TableComponent } from './component/reuse-component/table/table.componen
 import { FormdesignComponent } from './component/reuse-component/formdesign/formdesign.component';
 import { AssociateComponent } from './component/reuse-component/associate/associate.component';
 import { StudioListComponent } from './component/studio-list/studio-list.component';
+import { BookingListComponent } from './component/booking-list/booking-list.component';
 
 const routes: Routes = [
   { path: '', component: StudioListComponent },
+  { path: 'bookings', component: BookingListComponent },
   { path: 'autocomplete', component: AutocompleteComponent },
   { path: 'input', component: InputComponent },
   { path: 'card', component: CardComponent },
