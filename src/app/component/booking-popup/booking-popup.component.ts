@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { map, Observable } from 'rxjs';
 import { IBooking } from 'src/app/Model/Booking';
 import { BookingService } from 'src/app/service/booking-service.service';
-import { MasterService } from 'src/app/service/master.service';
 import Swal from 'sweetalert2';
 
 @Component({

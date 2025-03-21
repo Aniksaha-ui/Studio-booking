@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MasterService } from 'src/app/service/master.service';
 import { BookingService } from 'src/app/service/booking-service.service';
 
 @Component({
@@ -28,7 +27,6 @@ export class BookingListComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private service: MasterService,
     private dialog: MatDialog,
     private bookingService: BookingService
   ) {
@@ -38,9 +36,6 @@ export class BookingListComponent {
   fetchBookingInformation() {
     this.bookingService.fetchBookingStudioInformation().subscribe((res) => {
       this.bookingList = res.data;
-
-      console.log(this.bookingList);
-
       this.dataSource = new MatTableDataSource<any>(this.bookingList);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
