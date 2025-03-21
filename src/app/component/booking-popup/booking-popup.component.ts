@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { map, Observable } from 'rxjs';
+import { IBooking } from 'src/app/Model/Booking';
 import { BookingService } from 'src/app/service/booking-service.service';
 import { MasterService } from 'src/app/service/master.service';
 import Swal from 'sweetalert2';
@@ -21,7 +22,6 @@ export class BookingPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<BookingPopupComponent>,
     private fb: FormBuilder,
-    private service: MasterService,
     private bookingService: BookingService
   ) {
     this.bookingForm = this.fb.group({
@@ -29,10 +29,9 @@ export class BookingPopupComponent implements OnInit {
       name: [''],
       customer_name: [''],
       email: [''],
-      phone: [''],
       date: [new Date()],
       time: [''],
-      status: [true],
+      type: '',
     });
 
     this.generateTimeSlots();
@@ -52,7 +51,7 @@ export class BookingPopupComponent implements OnInit {
       customer_name: '',
       email: '',
       phone: '',
-      status: true,
+      type: this.selectedStudioInformation?.Type,
       date: this.selectedStudioInformation?.date
         ? new Date(this.selectedStudioInformation.date)
         : new Date(),
@@ -73,10 +72,12 @@ export class BookingPopupComponent implements OnInit {
   }
 
   checkAvailability(slotInfo: any): any {
-    let check = 1;
-    const bookingList = localStorage.getItem('bookingData');
-    const bookingInfo = bookingList ? JSON.parse(bookingList) : [];
-    bookingInfo.map((book: any) => {
+    console.log(slotInfo, 'slotInfo');
+
+    let check: number = 1;
+    const bookingList: any = localStorage.getItem('bookingData');
+    const bookingInfo: IBooking[] = bookingList ? JSON.parse(bookingList) : [];
+    bookingInfo.map((book: IBooking) => {
       if (
         book.id === slotInfo.id &&
         moment(book.date).format('YYYY-MM-DD') ==
