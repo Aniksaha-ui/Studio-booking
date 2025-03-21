@@ -29,6 +29,7 @@ export class StudioListComponent {
     'city',
     'area',
     'price',
+    'amenities',
     'rating',
     'action',
   ];
