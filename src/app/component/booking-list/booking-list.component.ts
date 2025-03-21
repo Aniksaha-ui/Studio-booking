@@ -22,6 +22,7 @@ export class BookingListComponent {
   areaControl: FormControl = new FormControl();
   displayedColumns: string[] = [
     'name',
+    'type',
     'customer_name',
     'email',
     'date',

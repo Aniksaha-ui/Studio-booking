@@ -71,11 +71,11 @@ export class BookingPopupComponent implements OnInit {
     this.ref.close('Closed using function');
   }
 
-  checkAvailability(slotInfo: any): any {
-    console.log(slotInfo, 'slotInfo');
+  checkAvailability(slotInfo: IBooking): number {
+    let check = 1;
+    console.log(slotInfo, 'slot info');
 
-    let check: number = 1;
-    const bookingList: any = localStorage.getItem('bookingData');
+    const bookingList = localStorage.getItem('bookingData');
     const bookingInfo: IBooking[] = bookingList ? JSON.parse(bookingList) : [];
     bookingInfo.map((book: IBooking) => {
       if (
@@ -125,6 +125,7 @@ export class BookingPopupComponent implements OnInit {
           title: 'Already Booked Slot!',
           text: 'The selected time slot is not available. Please choose another time.',
         });
+        return;
       }
 
       this.bookingService
