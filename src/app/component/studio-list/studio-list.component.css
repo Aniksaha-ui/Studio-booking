@@ -1,53 +1,100 @@
-.studio-card {
-  width: 60%;
-  padding: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 0% 20%;
-  background-color: aliceblue;
+/* Make the card responsive */
+.responsive-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-table {
+/* Ensure the search field takes full width on small screens */
+.search-field {
+  width: 100%;
+}
+
+/* Responsive table wrapper to prevent horizontal overflow */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Bordered Table Styling */
+.bordered-table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
 }
 
-td {
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tr:hover {
-  background-color: #ddd;
-  transition: 0.3s;
-}
-
-.text-center {
-  text-align: center;
-  font-size: 24px; /* Adjust font size for "Hello World" */
-}
-
-.text-5xl {
-  font-size: 30px;
-}
-
+/* Apply border to all table elements */
 .bordered-table th,
 .bordered-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
+  text-align: left;
 }
 
+/* Add background color to table headers */
 .bordered-table th {
-  background-color: #130000;
+  background-color: #007bff;
   color: white;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
+/* Add alternating row colors */
 .bordered-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-.search-container {
-  margin-bottom: 20px;
-  width: 300px;
+
+/* Highlight row on hover */
+.bordered-table tr:hover {
+  background-color: #f1f1f1;
+  transition: 0.3s;
+}
+
+/* Style action buttons */
+.bordered-table .mat-raised-button {
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+/* Responsive Design Adjustments */
+@media screen and (max-width: 768px) {
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Hide less important columns on small screens */
+  .mat-column-amenities,
+  .mat-column-rating {
+    display: none;
+  }
+
+  .mat-column-action {
+    text-align: center;
+  }
+
+  .mat-paginator {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  /* Stack action buttons vertically on small screens */
+  .mat-column-action {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+  }
+
+  /* Adjust paginator for small screens */
+  .mat-paginator {
+    font-size: 10px;
+  }
 }
