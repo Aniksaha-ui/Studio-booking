@@ -72,8 +72,6 @@ export class BookingPopupComponent implements OnInit {
 
   checkAvailability(slotInfo: IBooking): number {
     let check = 1;
-    console.log(slotInfo, 'slot info');
-
     const bookingList = localStorage.getItem('bookingData');
     const bookingInfo: IBooking[] = bookingList ? JSON.parse(bookingList) : [];
     bookingInfo.map((book: IBooking) => {

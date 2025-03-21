@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,10 +25,7 @@ export class BookingListComponent {
   @ViewChild(MatPaginator) paginatior!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private dialog: MatDialog,
-    private bookingService: BookingService
-  ) {
+  constructor(private bookingService: BookingService) {
     this.fetchBookingInformation();
   }
 

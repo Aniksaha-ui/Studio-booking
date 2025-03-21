@@ -1,21 +1,45 @@
 <mat-card class="responsive-card">
   <h1 class="custom-header">Studio List</h1>
 
-  <mat-card-header>
-    <mat-form-field appearance="fill" class="search-field">
+  <mat-card-header
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="16px"
+  >
+    <mat-form-field appearance="fill" class="search-field" fxFlex="1">
       <mat-label>Search by Area</mat-label>
       <input
         matInput
         [matAutocomplete]="auto"
         [formControl]="areaControl"
-        (keyup)="Filterchange($event)"
+        (keyup)="filterChange($event)"
         placeholder="Select Area"
       />
-      <mat-autocomplete #auto="matAutocomplete">
+
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="onAreaSelect($event)"
+      >
         <mat-option *ngFor="let area of areaList" [value]="area.Area">
           {{ area.Area }}
         </mat-option>
       </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field
+      style="margin-left: 10px"
+      appearance="fill"
+      class="search-field"
+      fxFlex="0 1 200px"
+    >
+      <mat-label>Radius (in km)</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Enter radius"
+        (keyup)="rediusChange($event)"
+        min="1"
+      />
     </mat-form-field>
   </mat-card-header>
 

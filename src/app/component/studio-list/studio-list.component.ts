@@ -2,11 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Customer } from 'src/app/Model/Customer';
-import { PopupComponent } from '../reuse-component/popup/popup.component';
-import { UserdetailComponent } from '../reuse-component/userdetail/userdetail.component';
-import { Component, ViewChild } from '@angular/core';
-import { from } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IStudio, IArea } from 'src/app/Model/Studio';
 import { StudioService } from 'src/app/service/studio.service';
@@ -16,12 +12,13 @@ import { BookingPopupComponent } from '../booking-popup/booking-popup.component'
   templateUrl: './studio-list.component.html',
   styleUrls: ['./studio-list.component.css'],
 })
-export class StudioListComponent {
+export class StudioListComponent implements OnInit {
   dataSource: any;
   studioList: IStudio[] = [];
   areaControl: FormControl = new FormControl();
   areaList: IArea[] = [];
-  colors: string[] = ['Red', 'Blue', 'Black'];
+  myLocation: any = { latitude: 0, longitude: 0 };
+
   displayedColumns: string[] = [
     'name',
     'type',
@@ -35,28 +32,49 @@ export class StudioListComponent {
   @ViewChild(MatPaginator) paginatior!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private studioService: StudioService) {
+  constructor(
+    private dialog: MatDialog,
+    private studioService: StudioService
+  ) {}
+  ngOnInit(): void {
     this.fetchStudioInformation();
+    this.setMyLocation();
+  }
+
+  setMyLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = Number(position.coords.latitude);
+          const longitude = Number(position.coords.longitude);
+          this.myLocation = { latitude: latitude, longitude: longitude };
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
   }
 
   fetchStudioInformation() {
     this.studioService.getStudioData().subscribe((res) => {
-      console.log(res);
-
       this.studioList = res.Studios;
       this.dataSource = new MatTableDataSource<IStudio>(this.studioList);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
 
       this.studioList.map((studio) => {
-        this.areaList.push({ Area: studio.Location.Area } as IArea);
+        this.areaList = Array.from(
+          new Set(this.studioList.map((studio) => studio.Location.Area))
+        ).map((area) => ({ Area: area } as IArea));
       });
     });
   }
 
-  Filterchange(event: any) {
+  filterChange(event: any) {
     let input: any = event.target.value.toLowerCase();
-    console.log(input, 'input');
     if (!input) {
       this.dataSource.data = this.studioList;
       return;
@@ -69,24 +87,75 @@ export class StudioListComponent {
     this.dataSource.data = filteredData;
   }
 
-  FilterSelectchange(input: string) {
-    console.log('Filter triggered:', input);
+  onAreaSelect(event: any) {
+    let selectedArea: string = event.option.value.toLowerCase();
+    if (!selectedArea) {
+      this.dataSource.data = this.studioList;
+      return;
+    }
+
+    let filteredData = this.studioList.filter((studio) => {
+      return studio.Location?.Area?.toLowerCase().includes(selectedArea);
+    });
+
+    this.dataSource.data = filteredData;
+  }
+
+  // This method calculates the distance between two geographical points using the Haversine formula
+  getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const toRad = (value: number) => (value * Math.PI) / 180; // Convert degrees to radians
+    const R = 6371;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+  }
+
+  rediusChange(event: any) {
+    let searchRadiusValue: number = event.target.value;
+
+    if (!searchRadiusValue || isNaN(searchRadiusValue)) {
+      this.dataSource.data = this.studioList;
+      return;
+    }
+    let filteredStudios = this.studioList.filter((studio: any) => {
+      const Latitude = studio.Location?.Coordinates?.Latitude ?? 0;
+      const Longitude = studio.Location?.Coordinates?.Longitude ?? 0;
+      const userLatitude = Number(this.myLocation.latitude);
+      const userLongitude = Number(this.myLocation.longitude);
+      if (
+        isNaN(userLatitude) ||
+        isNaN(userLongitude) ||
+        isNaN(Latitude) ||
+        isNaN(Longitude)
+      ) {
+        console.error('Invalid coordinates');
+        return false;
+      }
+      const distance = this.getDistance(
+        userLatitude,
+        userLongitude,
+        Latitude,
+        Longitude
+      );
+
+      return distance <= searchRadiusValue;
+    });
+    this.dataSource.data = filteredStudios;
   }
 
   bookingStudio(data: any) {
-    console.log(data, 'data');
-    this.Openpopup(data, 'Edit Customer', BookingPopupComponent);
+    this.OpenBookingModal(data, 'Edit Customer', BookingPopupComponent);
   }
 
-  detailcustomer(code: any) {
-    this.Openpopup(code, 'Customer Detail', UserdetailComponent);
-  }
-
-  addcustomer() {
-    this.Openpopup(0, 'Add Customer', PopupComponent);
-  }
-
-  Openpopup(data: any, title: any, component: any) {
+  OpenBookingModal(data: any, title: any, component: any) {
     var _popup = this.dialog.open(component, {
       width: '40%',
       enterAnimationDuration: '1000ms',
@@ -94,7 +163,6 @@ export class StudioListComponent {
       data: data,
     });
     _popup.afterClosed().subscribe((item) => {
-      // console.log(item)
       this.fetchStudioInformation();
     });
   }
